@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec';
+const fetch = require("node-fetch");
 
 async function getDockerRegistryToken(username: string, password: string): Promise<string> {
   const url = 'https://hub.docker.com/v2/users/login/';
@@ -16,11 +17,11 @@ async function getDockerRegistryToken(username: string, password: string): Promi
   };
 
   return fetch(url, options)
-    .then(response => {
+    .then((response: any) => {
       if (!response.ok) {
         throw new Error(response.statusText)
       }
-      return response.json().then(data => (data as DockerLoginResponse).token);
+      return response.json().then((data: DockerLoginResponse) => data.token);
     })
 }
 
