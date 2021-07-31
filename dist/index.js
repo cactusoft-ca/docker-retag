@@ -64,7 +64,9 @@ function getDockerRegistryToken(username, password) {
 }
 function GetListOftags(repoName, token) {
     return __awaiter(this, void 0, void 0, function* () {
-        return fetch(`https://hub.docker.com/v2/repositories/${repoName}/tags/?page_size=10000`, {
+        const url = `https://hub.docker.com/v2/repositories/${repoName}/tags/?page_size=10000`;
+        core.debug(`URL: ${url}`);
+        return fetch(url, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -75,6 +77,7 @@ function GetListOftags(repoName, token) {
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
+            core.debug(`Response: ${response.json()}`);
             response.json().then((data) => data);
         });
     });

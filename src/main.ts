@@ -27,7 +27,10 @@ async function getDockerRegistryToken(username: string, password: string): Promi
 }
 
 async function GetListOftags(repoName: string, token: string): Promise<dockerApi.Images> {
-  return fetch(`https://hub.docker.com/v2/repositories/${repoName}/tags/?page_size=10000`, {
+  const url: string = `https://hub.docker.com/v2/repositories/${repoName}/tags/?page_size=10000`;
+  core.debug(`URL: ${url}`)
+
+  return fetch(url, {
     method: "GET",
     headers: {
       'Accept': 'application/json',
@@ -38,6 +41,7 @@ async function GetListOftags(repoName: string, token: string): Promise<dockerApi
     if (!response.ok) {
       throw new Error(response.statusText)
     }
+    core.debug(`Response: ${response.json()}`)
     response.json().then((data: dockerApi.Images) => data);
   })
 }
