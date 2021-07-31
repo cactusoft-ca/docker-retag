@@ -1,11 +1,23 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Docker retag'
+description: 'This action is to retag and existing docker image tag from dockerhub or github packages'
+author: 'Mostefa Kamal Lala - Cactusoft'
 inputs:
-  milliseconds: # change this
+  username:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'docker username'
+  password:
+    required: true
+    description: 'docker password'
+  sourceTag:
+    required: true
+    description: 'The tag to check for'
+  newTags:
+    required: true
+    description: 'A list of tags to use for retag'
+  registry:
+      required: true
+      description: 'The registry to check, by default is dockerhub'
+      default: 'dockerhub'
 runs:
   using: 'node12'
   main: 'dist/index.js'
