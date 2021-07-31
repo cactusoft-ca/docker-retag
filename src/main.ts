@@ -26,21 +26,21 @@ async function getDockerRegistryToken(username: string, password: string): Promi
     })
 }
 
-// async function GetListOftags(repoName: string, token: string): Promise<dockerApi.Images> {
-//   return fetch(`https://hub.docker.com/v2/repositories/${repoName}/tags/?page_size=10000`, {
-//     method: "GET",
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json;charset=UTF-8',
-//       'Authorization': `JWT ${token}`
-//     }
-//   }).then((response: any) => {
-//     if (!response.ok) {
-//       throw new Error(response.statusText)
-//     }
-//     response.json().then((data: dockerApi.Images) => data);
-//   })
-// }
+async function GetListOftags(repoName: string, token: string): Promise<dockerApi.Images> {
+  return fetch(`https://hub.docker.com/v2/repositories/${repoName}/tags/?page_size=10000`, {
+    method: "GET",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Authorization': `JWT ${token}`
+    }
+  }).then((response: any) => {
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    response.json().then((data: dockerApi.Images) => data);
+  })
+}
 
 async function installDockerRetag() {
   await exec.getExecOutput('wget', ['-q', 'https://github.com/joshdk/docker-retag/releases/download/0.0.2/docker-retag', '/usr/bin']);
