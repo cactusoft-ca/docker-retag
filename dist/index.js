@@ -62,23 +62,21 @@ function getDockerRegistryToken(username, password) {
         });
     });
 }
-function GetListOftags(repoName, token) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return fetch(`https://hub.docker.com/v2/repositories/${repoName}/tags/?page_size=10000`, {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Authorization': `JWT ${token}`
-            }
-        }).then((response) => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            response.json().then((data) => data);
-        });
-    });
-}
+// async function GetListOftags(repoName: string, token: string): Promise<dockerApi.Images> {
+//   return fetch(`https://hub.docker.com/v2/repositories/${repoName}/tags/?page_size=10000`, {
+//     method: "GET",
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json;charset=UTF-8',
+//       'Authorization': `JWT ${token}`
+//     }
+//   }).then((response: any) => {
+//     if (!response.ok) {
+//       throw new Error(response.statusText)
+//     }
+//     response.json().then((data: dockerApi.Images) => data);
+//   })
+// }
 function installDockerRetag() {
     return __awaiter(this, void 0, void 0, function* () {
         yield exec.getExecOutput('wget', ['-q', 'https://github.com/joshdk/docker-retag/releases/download/0.0.2/docker-retag', '/usr/bin']);
@@ -95,15 +93,15 @@ function run() {
             const sourceTag = core.getInput('sourceTag');
             const paths = core.getMultilineInput('newTags', { required: true });
             const token = getDockerRegistryToken(dockerUsername, dockerPassword);
-            const tags = yield (yield GetListOftags(repoName, yield token)).results;
+            // const tags = await (await GetListOftags(repoName, await token)).results
             let exists = false;
-            for (const path of tags) {
-                core.debug(path.name);
-                if (path.name === sourceTag) {
-                    exists = true;
-                    break;
-                }
-            }
+            // for (const path of tags) {
+            //     core.debug(path.name)
+            //     if(path.name === sourceTag){
+            //       exists = true
+            //       break;
+            //     }
+            // }
             core.setOutput('existing-tag', exists);
             installDockerRetag();
             yield exec.getExecOutput('export', [`DOCKER_USER${dockerUsername}`]);
