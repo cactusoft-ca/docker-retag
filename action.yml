@@ -8,6 +8,9 @@ inputs:
   password:
     required: true
     description: 'docker password'
+  repoName:
+    required: true
+    description: 'The name of repo'
   sourceTag:
     required: true
     description: 'The tag to check for'
