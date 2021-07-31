@@ -95,19 +95,19 @@ function run() {
             const sourceTag = core.getInput('sourceTag');
             const paths = core.getMultilineInput('newTags', { required: true });
             const token = getDockerRegistryToken(dockerUsername, dockerPassword);
-            // const tags = await (await GetListOftags(repoName, await token)).results
+            const tags = yield (yield GetListOftags(repoName, yield token)).results;
             let exists = false;
-            // for (const path of tags) {
-            //     core.debug(path.name)
-            //     if(path.name === sourceTag){
-            //       exists = true
-            //       break;
-            //     }
-            // }
+            for (const path of tags) {
+                core.debug(path.name);
+                if (path.name === sourceTag) {
+                    exists = true;
+                    break;
+                }
+            }
             core.setOutput('existing-tag', exists);
-            installDockerRetag();
-            yield exec.getExecOutput('export', [`DOCKER_USER${dockerUsername}`]);
-            yield exec.getExecOutput('export', [`DOCKER_PASS${dockerPassword}`]);
+            // installDockerRetag();
+            // await exec.getExecOutput('export', [`DOCKER_USER${dockerUsername}`]);
+            // await exec.getExecOutput('export', [`DOCKER_PASS${dockerPassword}`]);
             core.setOutput('token', yield token);
         }
         catch (error) {

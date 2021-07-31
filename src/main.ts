@@ -57,25 +57,25 @@ async function run(): Promise<void> {
     const paths: string[] = core.getMultilineInput('newTags', { required: true });
 
     const token = getDockerRegistryToken(dockerUsername, dockerPassword)
-    // const tags = await (await GetListOftags(repoName, await token)).results
+    const tags = await (await GetListOftags(repoName, await token)).results
 
     let exists = false;
 
-    // for (const path of tags) {
-    //     core.debug(path.name)
+    for (const path of tags) {
+        core.debug(path.name)
 
-    //     if(path.name === sourceTag){
-    //       exists = true
-    //       break;
-    //     }
-    // }
+        if(path.name === sourceTag){
+          exists = true
+          break;
+        }
+    }
 
     core.setOutput('existing-tag', exists)
 
 
-    installDockerRetag();
-    await exec.getExecOutput('export', [`DOCKER_USER${dockerUsername}`]);
-    await exec.getExecOutput('export', [`DOCKER_PASS${dockerPassword}`]);
+    // installDockerRetag();
+    // await exec.getExecOutput('export', [`DOCKER_USER${dockerUsername}`]);
+    // await exec.getExecOutput('export', [`DOCKER_PASS${dockerPassword}`]);
 
 
     core.setOutput('token', await token)
