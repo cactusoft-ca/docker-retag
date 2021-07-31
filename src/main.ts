@@ -56,8 +56,12 @@ async function run(): Promise<void> {
     const sourceTag: string = core.getInput('sourceTag');
     const paths: string[] = core.getMultilineInput('newTags', { required: true });
 
-    const token = getDockerRegistryToken(dockerUsername, dockerPassword)
-    const tags = await (await GetListOftags(repoName, await token)).results
+    core.debug('Getting docker registry token');
+    const token = await getDockerRegistryToken(dockerUsername, dockerPassword)
+
+    core.debug('Getting docker lsit of tags');
+    const images = await GetListOftags(repoName, token)
+    const tags = images.results;
 
     let exists = false;
 

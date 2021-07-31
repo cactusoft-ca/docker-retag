@@ -94,8 +94,11 @@ function run() {
             const repoName = core.getInput('imangeName');
             const sourceTag = core.getInput('sourceTag');
             const paths = core.getMultilineInput('newTags', { required: true });
-            const token = getDockerRegistryToken(dockerUsername, dockerPassword);
-            const tags = yield (yield GetListOftags(repoName, yield token)).results;
+            core.debug('Getting docker registry token');
+            const token = yield getDockerRegistryToken(dockerUsername, dockerPassword);
+            core.debug('Getting docker lsit of tags');
+            const images = yield GetListOftags(repoName, token);
+            const tags = images.results;
             let exists = false;
             for (const path of tags) {
                 core.debug(path.name);
