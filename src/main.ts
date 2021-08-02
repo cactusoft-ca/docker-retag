@@ -56,7 +56,7 @@ async function run(): Promise<void> {
     const dockerUsername: string = core.getInput('username');
     const dockerPassword: string = core.getInput('password');
     const dockerRegistry: string = core.getInput('registry');
-    const repoName: string = core.getInput('imangeName');
+    const repoName: string = core.getInput('repoName');
     const sourceTag: string = core.getInput('sourceTag');
     const paths: string[] = core.getMultilineInput('newTags', { required: true });
 

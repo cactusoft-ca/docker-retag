@@ -94,7 +94,7 @@ function run() {
             const dockerUsername = core.getInput('username');
             const dockerPassword = core.getInput('password');
             const dockerRegistry = core.getInput('registry');
-            const repoName = core.getInput('imangeName');
+            const repoName = core.getInput('repoName');
             const sourceTag = core.getInput('sourceTag');
             const paths = core.getMultilineInput('newTags', { required: true });
             core.debug('Getting docker registry token');
