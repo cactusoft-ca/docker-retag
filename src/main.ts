@@ -41,7 +41,7 @@ async function GetListOftags(repoName: string, token: string): Promise<dockerApi
     if (!response.ok) {
       throw new Error(response.statusText)
     }
-    core.debug(`Response: ${response.json()}`)
+    core.debug(`Response: ${response.json().then((data: dockerApi.Images) => data)}`)
     response.json().then((data: dockerApi.Images) => data);
   })
 }

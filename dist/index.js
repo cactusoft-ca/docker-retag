@@ -77,7 +77,7 @@ function GetListOftags(repoName, token) {
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
-            core.debug(`Response: ${response.json()}`);
+            core.debug(`Response: ${response.json().then((data) => data)}`);
             response.json().then((data) => data);
         });
     });
